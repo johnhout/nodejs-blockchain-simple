@@ -2,11 +2,10 @@ const SHA512 = require('crypto-js/sha512');
 
 class Block {
 
-    constructor(index, timestamp, data, previousHash = '')
+    constructor(timestamp, transactions, previousHash = '')
     {
-        this.index = index;
         this.timestamp = timestamp;
-        this.data = data;
+        this.transactions = transactions;
         this.previousHash = previousHash;
         this.hash = this.calculateHash();
         this.nonce = 0;
@@ -14,7 +13,7 @@ class Block {
 
     calculateHash()
     {
-        return SHA512(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data) + this.nonce).toString();
+        return SHA512(this.previousHash + this.timestamp + JSON.stringify(this.data) + this.nonce).toString();
     }
 
     mineBlock(difficulty) 
